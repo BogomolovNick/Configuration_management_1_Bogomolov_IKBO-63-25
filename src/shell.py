@@ -4,6 +4,9 @@ import shlex
 from dataclasses import dataclass
 
 
+MAX_CD_ARGS = 1
+
+
 @dataclass(frozen=True)
 class Result:
     """Результат выполнения одной строки."""
@@ -26,7 +29,7 @@ def execute(line: str) -> Result:
     if command == "ls":
         return Result(f"ls: {args!r}")
     if command == "cd":
-        if len(args) > 1:
+        if len(args) > MAX_CD_ARGS:
             return Result(
                 "Ошибка: cd: ожидается не более одного аргумента",
                 error=True,

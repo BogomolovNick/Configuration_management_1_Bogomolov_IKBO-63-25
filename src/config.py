@@ -10,7 +10,9 @@ DEFAULT_VFS = Path("demo.vfs")
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """Прочитать пути VFS и стартового скрипта из командной строки."""
-    parser = argparse.ArgumentParser(description="Графический эмулятор оболочки")
+    parser = argparse.ArgumentParser(
+        description="Графический эмулятор оболочки"
+    )
     parser.add_argument(
         "--vfs",
         type=Path,

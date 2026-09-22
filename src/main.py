@@ -13,6 +13,7 @@ class ShellWindow:
     """Окно с историей диалога и полем ввода."""
 
     def __init__(self, root: tk.Tk, vfs_name: str = VFS_NAME) -> None:
+        """Создать окно, область вывода и поле ввода команд."""
         self.root = root
         root.title(f"Эмулятор — {vfs_name}")
         root.geometry("720x420")
