@@ -2,6 +2,7 @@
 
 import tkinter as tk
 
+from .config import parse_args, run_script
 from .shell import execute
 
 
@@ -48,8 +49,16 @@ class ShellWindow:
 
 def main() -> None:
     """Запустить интерактивное окно."""
+    args = parse_args()
     root = tk.Tk()
-    ShellWindow(root)
+    window = ShellWindow(root, args.vfs.name)
+    window.write(f"VFS: {args.vfs}")
+    window.write(f"Стартовый скрипт: {args.script or 'не задан'}")
+    if args.script is not None:
+        try:
+            run_script(args.script, window.run_command)
+        except (OSError, UnicodeError) as error:
+            window.write(f"Ошибка стартового скрипта: {error}")
     root.mainloop()
 
 

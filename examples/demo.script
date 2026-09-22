@@ -1,0 +1,5 @@
+ls "папка с пробелами"
+cd "моя папка"
+unknown
+cd one two
+ls after-error
