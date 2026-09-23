@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from .config import parse_args, run_script
-from .shell import execute
+from .shell import Result, execute
 
 
 VFS_NAME = "demo.vfs"
@@ -26,14 +26,14 @@ class ShellWindow:
         self.output.configure(state="disabled")
         self.output.see("end")
 
-    def run_command(self, line: str) -> bool:
+    def run_command(self, line: str) -> Result:
         self.write(f"$ {line}")
         result = execute(line)
         if result.output:
             self.write(result.output)
         if result.should_exit:
             self.root.after_idle(self.root.destroy)
-        return result.should_exit
+        return result
 
     def submit(self, _event: tk.Event) -> None:
         line = self.entry.get()
@@ -49,9 +49,12 @@ def main() -> None:
     window.write(f"Стартовый скрипт: {args.script or 'не задан'}")
     if args.script is not None:
         try:
-            run_script(args.script, window.run_command)
+            had_errors = run_script(args.script, window.run_command)
         except (OSError, UnicodeError) as error:
             window.write(f"Ошибка стартового скрипта: {error}")
+            had_errors = True
+        if had_errors:
+            window.write("Скрипт был запущен с ошибками")
     root.mainloop()
 
 
