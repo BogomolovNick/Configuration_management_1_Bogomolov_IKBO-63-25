@@ -1,4 +1,3 @@
-"""Разбор и выполнение команд прототипа оболочки."""
 
 import shlex
 from dataclasses import dataclass
@@ -9,7 +8,6 @@ MAX_CD_ARGS = 1
 
 @dataclass(frozen=True)
 class Result:
-    """Результат выполнения одной строки."""
 
     output: str = ""
     should_exit: bool = False
@@ -17,7 +15,6 @@ class Result:
 
 
 def execute(line: str) -> Result:
-    """Выполнить одну строку, сохраняя ls и cd заглушками."""
     try:
         parts = shlex.split(line)
     except ValueError:
